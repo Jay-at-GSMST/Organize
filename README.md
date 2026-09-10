@@ -1,18 +1,6 @@
-## Getting Started
-
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Hi! My name is jayden, and I am creating a personal organization website designed to help people with ADHD manage their schoolwork, tasks, notes, and finances in one place. The goal is to make organization simple and less overwhelming instead of having information spread across different apps.
+The website currently has a homepage where users can keep track of their work and upload note files, including PDFs. There is also a separate notes page that displays uploaded files in a layout similar to Google Drive, making it easier to find and review saved school materials.
+The website also has a finance/budget page where users can keep track of their money and organize their spending. There are multiple pages connected together through navigation.
+I am building the website with HTML, CSS, and JavaScript and hosting it with GitHub Pages. I want the code to stay simple, readable, and understandable rather than using complicated code that I can't explain.
+The main design goal is to make the website useful for people who struggle with organization, forgetfulness, keeping track of assignments, and managing multiple types of information. It should feel like one central place where someone can see and manage what they need to get done.
+The 2nd and 3rd pages are left blank for me to add some new things on after I retrieve some feedback on something else I could implement!
