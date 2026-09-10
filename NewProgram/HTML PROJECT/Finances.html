@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Finances</title>
+
+    <style>
+
+        body {
+            background-color: #3345a9ea;
+            font-family: Arial, sans-serif;
+        }
+
+        div {
+            margin: 5px;
+            border: 6px solid black;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        /* TOP */
+
+        #title {
+            width: 100%;
+            height: 75px;
+            background-color: #fff4b5;
+        }
+
+        /* MAIN BOXES */
+
+        .box {
+            background-color: #fff4b5;
+            display: inline-block;
+            vertical-align: top;
+            padding: 10px;
+        }
+
+        #balanceBox {
+            width: 300px;
+            height: 180px;
+        }
+
+        #budgetBox {
+            width: 400px;
+            height: 180px;
+        }
+
+        #spendingBox {
+            width: 400px;
+            height: 180px;
+        }
+
+        #transactionBox {
+            width: 700px;
+            height: 400px;
+        }
+
+        #categoryBox {
+            width: 400px;
+            height: 400px;
+        }
+
+        /* BALANCE */
+
+        #balance {
+            text-align: center;
+            font-size: 45px;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+
+        /* INPUTS */
+
+        input, select {
+            padding: 8px;
+            border: 2px solid black;
+            border-radius: 4px;
+            margin: 3px;
+        }
+
+        input[type="number"] {
+            width: 100px;
+        }
+
+        /* BUTTONS */
+
+        button {
+            background-color: #3345a9;
+            color: white;
+            border: 3px solid black;
+            border-radius: 6px;
+            padding: 8px 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 3px;
+        }
+
+        button:hover {
+            background-color: #5263c7;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* PROGRESS BAR */
+
+        #progressBackground {
+            width: 90%;
+            height: 25px;
+            background-color: white;
+            border: 3px solid black;
+            margin: 15px auto;
+        }
+
+        #progress {
+            width: 0%;
+            height: 100%;
+            background-color: #3345a9;
+        }
+
+        /* TRANSACTIONS */
+
+        #transactions {
+            height: 260px;
+            overflow-y: auto;
+            border: 3px solid black;
+            background-color: #fffdec;
+        }
+
+        .transaction {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border: 2px solid black;
+            background-color: #fff4b5;
+        }
+
+        .income {
+            color: green;
+            font-weight: bold;
+        }
+
+        .expense {
+            color: red;
+            font-weight: bold;
+        }
+
+        /* CATEGORY */
+
+        #categories {
+            border: 3px solid black;
+            background-color: #fffdec;
+            padding: 10px;
+        }
+
+        .category {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border: 2px solid black;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- TITLE -->
+
+    <div id="title">
+        <h1>💰 My Finances</h1>
+    </div>
+
+
+    <!-- BALANCE -->
+
+    <div class="box" id="balanceBox">
+
+        <h2>Balance</h2>
+
+        <div id="balance">
+            $0.00
+        </div>
+
+    </div>
+
+
+    <!-- BUDGET -->
+
+    <div class="box" id="budgetBox">
+
+        <h2>Monthly Budget</h2>
+
+        <input
+            type="number"
+            id="budgetInput"
+            placeholder="Budget"
+        >
+
+        <button onclick="setBudget()">
+            Set Budget
+        </button>
+
+        <p>
+            Budget: $<span id="budget">0.00</span>
+        </p>
+
+        <p>
+            Remaining: $<span id="remaining">0.00</span>
+        </p>
+
+    </div>
+
+
+    <!-- SPENDING -->
+
+    <div class="box" id="spendingBox">
+
+        <h2>Budget Used</h2>
+
+        <div id="progressBackground">
+
+            <div id="progress"></div>
+
+        </div>
+
+        <p style="text-align:center;">
+            <span id="percentUsed">0</span>% used
+        </p>
+
+    </div>
+
+
+    <!-- TRANSACTIONS -->
+
+    <div class="box" id="transactionBox">
+
+        <h2>Transactions</h2>
+
+        <select id="type">
+
+            <option value="income">
+                Income
+            </option>
+
+            <option value="expense">
+                Expense
+            </option>
+
+        </select>
+
+
+        <input
+            type="text"
+            id="description"
+            placeholder="Description"
+        >
+
+
+        <input
+            type="number"
+            id="amount"
+            placeholder="Amount"
+            step="0.01"
+        >
+
+
+        <select id="category">
+
+            <option value="Food">
+                Food
+            </option>
+
+            <option value="School">
+                School
+            </option>
+
+            <option value="Entertainment">
+                Entertainment
+            </option>
+
+            <option value="Transportation">
+                Transportation
+            </option>
+
+            <option value="Shopping">
+                Shopping
+            </option>
+
+            <option value="Bills">
+                Bills
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+        </select>
+
+
+        <button onclick="addTransaction()">
+            Add
+        </button>
+
+
+        <div id="transactions"></div>
+
+    </div>
+
+
+    <!-- CATEGORIES -->
+
+    <div class="box" id="categoryBox">
+
+        <h2>Spending</h2>
+
+        <div id="categories"></div>
+
+    </div>
+
+
+    <script>
+
+        /* =========================
+           DATA
+        ========================= */
+
+        let transactions =
+            JSON.parse(
+                localStorage.getItem("transactions")
+            ) || [];
+
+        let budget =
+            Number(
+                localStorage.getItem("budget")
+            ) || 0;
+
+
+        /* =========================
+           SET BUDGET
+        ========================= */
+
+        function setBudget() {
+
+            const input =
+                document.getElementById(
+                    "budgetInput"
+                );
+
+            const newBudget =
+                Number(input.value);
+
+            if (newBudget <= 0) {
+
+                alert("Enter a valid budget.");
+
+                return;
+
+            }
+
+            budget = newBudget;
+
+            localStorage.setItem(
+                "budget",
+                budget
+            );
+
+            input.value = "";
+
+            updatePage();
+
+        }
+
+
+        /* =========================
+           ADD TRANSACTION
+        ========================= */
+
+        function addTransaction() {
+
+            const type =
+                document.getElementById(
+                    "type"
+                ).value;
+
+            const description =
+                document.getElementById(
+                    "description"
+                ).value.trim();
+
+            const amount =
+                Number(
+                    document.getElementById(
+                        "amount"
+                    ).value
+                );
+
+            const category =
+                document.getElementById(
+                    "category"
+                ).value;
+
+
+            if (
+                description === "" ||
+                amount <= 0
+            ) {
+
+                alert(
+                    "Enter a description and valid amount."
+                );
+
+                return;
+
+            }
+
+
+            const transaction = {
+
+                id: Date.now(),
+
+                type: type,
+
+                description: description,
+
+                amount: amount,
+
+                category: category
+
+            };
+
+
+            transactions.push(
+                transaction
+            );
+
+
+            localStorage.setItem(
+                "transactions",
+                JSON.stringify(
+                    transactions
+                )
+            );
+
+
+            document.getElementById(
+                "description"
+            ).value = "";
+
+            document.getElementById(
+                "amount"
+            ).value = "";
+
+
+            updatePage();
+
+        }
+
+
+        /* =========================
+           DELETE TRANSACTION
+        ========================= */
+
+        function deleteTransaction(id) {
+
+            transactions =
+                transactions.filter(
+                    transaction =>
+                        transaction.id !== id
+                );
+
+
+            localStorage.setItem(
+                "transactions",
+                JSON.stringify(
+                    transactions
+                )
+            );
+
+
+            updatePage();
+
+        }
+
+
+        /* =========================
+           CALCULATE BALANCE
+        ========================= */
+
+        function calculateBalance() {
+
+            let balance = 0;
+
+
+            transactions.forEach(
+                transaction => {
+
+                    if (
+                        transaction.type ===
+                        "income"
+                    ) {
+
+                        balance +=
+                            transaction.amount;
+
+                    } else {
+
+                        balance -=
+                            transaction.amount;
+
+                    }
+
+                }
+            );
+
+
+            return balance;
+
+        }
+
+
+        /* =========================
+           CALCULATE EXPENSES
+        ========================= */
+
+        function calculateExpenses() {
+
+            let expenses = 0;
+
+
+            transactions.forEach(
+                transaction => {
+
+                    if (
+                        transaction.type ===
+                        "expense"
+                    ) {
+
+                        expenses +=
+                            transaction.amount;
+
+                    }
+
+                }
+            );
+
+
+            return expenses;
+
+        }
+
+
+        /* =========================
+           DISPLAY TRANSACTIONS
+        ========================= */
+
+        function displayTransactions() {
+
+            const container =
+                document.getElementById(
+                    "transactions"
+                );
+
+
+            container.innerHTML = "";
+
+
+            transactions
+                .slice()
+                .reverse()
+                .forEach(
+                    transaction => {
+
+                        const div =
+                            document.createElement(
+                                "div"
+                            );
+
+                        div.className =
+                            "transaction";
+
+
+                        const sign =
+                            transaction.type ===
+                            "income"
+                                ? "+"
+                                : "-";
+
+
+                        const colorClass =
+                            transaction.type ===
+                            "income"
+                                ? "income"
+                                : "expense";
+
+
+                        div.innerHTML = `
+
+                            <span>
+                                ${transaction.description}
+                                <br>
+                                <small>
+                                    ${transaction.category}
+                                </small>
+                            </span>
+
+                            <span class="${colorClass}">
+                                ${sign}$${transaction.amount.toFixed(2)}
+                            </span>
+
+                            <button
+                                onclick="deleteTransaction(${transaction.id})"
+                            >
+                                ❌
+                            </button>
+
+                        `;
+
+
+                        container.appendChild(
+                            div
+                        );
+
+                    }
+                );
+
+        }
+
+
+        /* =========================
+           CATEGORY BREAKDOWN
+        ========================= */
+
+        function displayCategories() {
+
+            const container =
+                document.getElementById(
+                    "categories"
+                );
+
+
+            container.innerHTML = "";
+
+
+            const categories = {};
+
+
+            transactions.forEach(
+                transaction => {
+
+                    if (
+                        transaction.type ===
+                        "expense"
+                    ) {
+
+                        if (
+                            !categories[
+                                transaction.category
+                            ]
+                        ) {
+
+                            categories[
+                                transaction.category
+                            ] = 0;
+
+                        }
+
+
+                        categories[
+                            transaction.category
+                        ] +=
+                            transaction.amount;
+
+                    }
+
+                }
+            );
+
+
+            Object.keys(categories)
+                .forEach(
+                    category => {
+
+                        const div =
+                            document.createElement(
+                                "div"
+                            );
+
+                        div.className =
+                            "category";
+
+
+                        div.innerHTML = `
+
+                            <span>
+                                ${category}
+                            </span>
+
+                            <strong>
+                                $${categories[category].toFixed(2)}
+                            </strong>
+
+                        `;
+
+
+                        container.appendChild(
+                            div
+                        );
+
+                    }
+                );
+
+
+            if (
+                Object.keys(categories).length === 0
+            ) {
+
+                container.innerHTML =
+                    "<p>No spending yet.</p>";
+
+            }
+
+        }
+
+
+        /* =========================
+           UPDATE PAGE
+        ========================= */
+
+        function updatePage() {
+
+            const balance =
+                calculateBalance();
+
+
+            const expenses =
+                calculateExpenses();
+
+
+            document.getElementById(
+                "balance"
+            ).innerText =
+                "$" + balance.toFixed(2);
+
+
+            document.getElementById(
+                "budget"
+            ).innerText =
+                budget.toFixed(2);
+
+
+            const remaining =
+                budget - expenses;
+
+
+            document.getElementById(
+                "remaining"
+            ).innerText =
+                remaining.toFixed(2);
+
+
+            let percentage = 0;
+
+
+            if (budget > 0) {
+
+                percentage =
+                    Math.round(
+                        (expenses / budget) * 100
+                    );
+
+            }
+
+
+            document.getElementById(
+                "percentUsed"
+            ).innerText =
+                percentage;
+
+
+            document.getElementById(
+                "progress"
+            ).style.width =
+                Math.min(
+                    percentage,
+                    100
+                ) + "%";
+
+
+            displayTransactions();
+
+            displayCategories();
+
+        }
+
+
+        /* =========================
+           START
+        ========================= */
+
+        updatePage();
+
+    </script>
+
+</body>
+</html>
